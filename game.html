@@ -12,9 +12,10 @@
 <body>
   <div class="btransp">
     <h1><br></h1>
-    <div class="game-wrapper">
-      <!-- Info Pemain -->
-      <div id="playerInfo" class="player-info"></div>
+      <div class="game-wrapper">
+        <!-- Info Pemain -->
+        <div id="playerInfo" class="player-info"></div>
+        <div id="scoreboard" class="scoreboard"></div>
 
       <!-- Area Kartu -->
       <div class="card-container">
@@ -25,6 +26,10 @@
             </div>
             <div class="card-back"></div>
           </div>
+          <div class="health-bar">
+            <div id="playerHealth" class="health-fill player"></div>
+          </div>
+          <div id="playerStats" class="stats"></div>
         </div>
 
         <div class="vs-text">VS</div>
@@ -36,6 +41,10 @@
             </div>
             <div class="card-back"></div>
           </div>
+            <div class="health-bar">
+              <div id="enemyHealth" class="health-fill enemy"></div>
+            </div>
+            <div id="enemyStats" class="stats"></div>
         </div>
       </div>
 

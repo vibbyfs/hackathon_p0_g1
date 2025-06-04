@@ -147,8 +147,48 @@ body {
 .player-info {
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   color: #d30000;
+}
+
+.scoreboard {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #fff;
+  background: rgba(0,0,0,0.6);
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+.health-bar {
+  width: 100%;
+  height: 12px;
+  background: #333;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.health-fill {
+  height: 100%;
+  width: 100%;
+  transition: width 0.3s;
+}
+
+.health-fill.player {
+  background: #2ecc71;
+}
+
+.health-fill.enemy {
+  background: #e74c3c;
+}
+
+.stats {
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+  margin-top: 4px;
 }
 
 .card-container {
@@ -158,7 +198,6 @@ body {
   gap: 40px;
   flex-wrap: wrap;
 }
-
 .card {
   width: 260px;
   height: 360px;
