@@ -323,28 +323,28 @@ if (window.location.pathname.includes("game.html")) {
       }
 
       updateScoreBoard();
+// <<<<<<< ay4aj4-codex/sesuaikan-ui-dan-ux-game.html
 
-    popup.style.display = "none";
+      showPopup(popupMsg, statusClass);
+    }, 700); // waktu animasi spinning
   };
 
+  // Custom popup battle
+  window.showPopup = function (msg, status) {
+    const popup = document.getElementById("battlePopup");
+    const popupText = document.getElementById("popupText");
+    const popupContent = popup.querySelector(".popup-content");
+    popupText.innerText = msg;
+    popupContent.classList.remove("win", "lose", "draw");
+    if (status) popupContent.classList.add(status);
+    popup.style.display = "flex";
+  };
+  window.closePopup = function () {
+    const popup = document.getElementById("battlePopup");
+    popup.querySelector(".popup-content").classList.remove("win", "lose", "draw");
 
-  function updateLabels() {
-    // Player
-    document.getElementById("playerName").textContent = localStorage.getItem("playerName");
-    document.getElementById("playerChar").textContent = playerData.character;
-    // Enemy
-    document.getElementById("enemyName").textContent = enemy.name;
-    document.getElementById("enemyChar").textContent = enemy.character;
 
-
-    // Setelah set musuh pertama kali:
-    let enemy = getNextEnemy();
-    document.getElementById("card2Img").src = enemy.image;
-    document.getElementById("card2Img").alt = enemy.character;
-    updateCardInfo();
-    updateLabels();
-
-    // Pada setiap ganti musuh di startBattle, tambahkan updateLabels() setelah updateCardInfo()
-
-  }
+// >>>>>>> main
+    popup.style.display = "none";
+  };
 }
