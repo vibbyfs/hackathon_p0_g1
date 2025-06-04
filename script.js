@@ -163,6 +163,38 @@ if (window.location.pathname.includes("game.html")) {
   document.getElementById("card1Img").src = playerCharacter;
   document.getElementById("card1Img").alt = playerCharacterName;
 
+  const roundDisplay = document.getElementById("roundDisplay");
+  const playerScoreDisplay = document.getElementById("playerScoreDisplay");
+  const enemyScoreDisplay = document.getElementById("enemyScoreDisplay");
+
+  const playerHpBar = document.getElementById("playerHpBar");
+  const enemyHpBar = document.getElementById("enemyHpBar");
+
+  function updateLabels() {
+    document.getElementById("playerName").textContent = playerName;
+    document.getElementById("playerChar").textContent = playerData.character;
+    document.getElementById("enemyName").textContent = enemy.name;
+    document.getElementById("enemyChar").textContent = enemy.character;
+  }
+
+  let playerCurrentHp;
+  let enemyCurrentHp;
+
+  function updateCardInfo() {
+    document.getElementById("playerAttr").textContent = playerData.stats.element.toUpperCase();
+    document.getElementById("enemyAttr").textContent = enemy.stats.element.toUpperCase();
+    document.getElementById("playerHp").textContent = playerCurrentHp + " HP";
+    document.getElementById("enemyHp").textContent = enemyCurrentHp + " HP";
+    playerHpBar.style.width = (playerCurrentHp / playerData.stats.hp * 100) + "%";
+    enemyHpBar.style.width = (enemyCurrentHp / enemy.stats.hp * 100) + "%";
+  }
+
+  function updateScoreBoard() {
+    roundDisplay.textContent = round;
+    playerScoreDisplay.textContent = playerScore;
+    enemyScoreDisplay.textContent = enemyScore;
+  }
+
   // --- Simpan data karakter pemain ---
   const playerData = partaiData.find(p => p.name === playerParty);
 
@@ -199,6 +231,12 @@ if (window.location.pathname.includes("game.html")) {
   document.getElementById("card2Img").src = enemy.image;
   document.getElementById("card2Img").alt = enemy.character;
 
+  playerCurrentHp = playerData.stats.hp;
+  enemyCurrentHp = enemy.stats.hp;
+  updateLabels();
+  updateCardInfo();
+  updateScoreBoard();
+
   window.startBattle = function () {
     // Animasi spinning pada kartu musuh
     const enemyCard = document.getElementById("card2");
@@ -210,12 +248,10 @@ if (window.location.pathname.includes("game.html")) {
       // Ambil stats
       const playerAtk = playerData.stats.atk;
       const playerDef = playerData.stats.def;
-      const playerHp = playerData.stats.hp;
       const playerElem = playerData.stats.element;
 
       const enemyAtk = enemy.stats.atk;
       const enemyDef = enemy.stats.def;
-      const enemyHp = enemy.stats.hp;
       const enemyElem = enemy.stats.element;
 
       // Hitung bonus elemen
@@ -227,36 +263,41 @@ if (window.location.pathname.includes("game.html")) {
       const damageToPlayer = Math.max(1, Math.round((enemyAtk - playerDef) * enemyBonus));
 
       // Sisa HP setelah satu ronde
-      const playerHpLeft = playerHp - damageToPlayer;
-      const enemyHpLeft = enemyHp - damageToEnemy;
+      playerCurrentHp = Math.max(0, playerCurrentHp - damageToPlayer);
+      enemyCurrentHp = Math.max(0, enemyCurrentHp - damageToEnemy);
+      updateCardInfo();
 
-      let resultMsg = `Ronde ${round}:\n`;
-      resultMsg += `Seranganmu: ${damageToEnemy} damage ke musuh (${enemy.character}, elemen: ${enemyElem}).\n`;
-      resultMsg += `Serangan musuh: ${damageToPlayer} damage ke kamu (${playerCharacterName}, elemen: ${playerElem}).\n`;
+      const playerHpLeft = playerCurrentHp;
+      const enemyHpLeft = enemyCurrentHp;
 
-      if (playerBonus > 1) resultMsg += "Kamu mendapat bonus elemen!\n";
-      if (enemyBonus > 1) resultMsg += "Musuh mendapat bonus elemen!\n";
-
+      let statusClass;
+      let popupMsg;
       if (playerHpLeft > enemyHpLeft) {
-        resultMsg += "Kamu MENANG di ronde ini!\n";
+        statusClass = "win";
+        popupMsg = "MENANG RONDE INI!";
         playerScore++;
       } else if (playerHpLeft < enemyHpLeft) {
-        resultMsg += "Kamu KALAH di ronde ini!\n";
+        statusClass = "lose";
+        popupMsg = "KALAH RONDE INI!";
         enemyScore++;
       } else {
-        resultMsg += "Seri di ronde ini!\n";
+        statusClass = "draw";
+        popupMsg = "SERI RONDE INI!";
       }
 
       // Cek apakah sudah 3 ronde
       if (round === 3) {
-        resultMsg += `\nHASIL AKHIR:\nKamu menang ${playerScore} ronde.\nMusuh menang ${enemyScore} ronde.\n`;
         if (playerScore > enemyScore) {
-          resultMsg += "SELAMAT! Kamu MENANG pertandingan!";
+          popupMsg = "KAMU MENANG PERTANDINGAN!";
+          statusClass = "win";
         } else if (playerScore < enemyScore) {
-          resultMsg += "Kamu KALAH pertandingan!";
+          popupMsg = "KAMU KALAH PERTANDINGAN!";
+          statusClass = "lose";
         } else {
-          resultMsg += "Pertandingan SERI!";
+          popupMsg = "PERTANDINGAN SERI!";
+          statusClass = "draw";
         }
+
         // Reset ronde dan skor untuk pertandingan berikutnya
         round = 1;
         playerScore = 0;
@@ -265,47 +306,41 @@ if (window.location.pathname.includes("game.html")) {
         enemy = getNextEnemy();
         document.getElementById("card2Img").src = enemy.image;
         document.getElementById("card2Img").alt = enemy.character;
+        playerCurrentHp = playerData.stats.hp;
+        enemyCurrentHp = enemy.stats.hp;
+        updateLabels();
+        updateCardInfo();
       } else {
         round++;
         // Ambil musuh baru untuk ronde berikutnya
         enemy = getNextEnemy();
         document.getElementById("card2Img").src = enemy.image;
         document.getElementById("card2Img").alt = enemy.character;
+        playerCurrentHp = playerData.stats.hp;
+        enemyCurrentHp = enemy.stats.hp;
+        updateLabels();
+        updateCardInfo();
       }
 
-      showPopup(resultMsg);
+      updateScoreBoard();
+
+      showPopup(popupMsg, statusClass);
     }, 700); // waktu animasi spinning
   };
 
   // Custom popup battle
-  window.showPopup = function (msg) {
+  window.showPopup = function (msg, status) {
     const popup = document.getElementById("battlePopup");
     const popupText = document.getElementById("popupText");
+    const popupContent = popup.querySelector(".popup-content");
     popupText.innerText = msg;
+    popupContent.classList.remove("win", "lose", "draw");
+    if (status) popupContent.classList.add(status);
     popup.style.display = "flex";
   };
   window.closePopup = function () {
-    document.getElementById("battlePopup").style.display = "none";
+    const popup = document.getElementById("battlePopup");
+    popup.querySelector(".popup-content").classList.remove("win", "lose", "draw");
+    popup.style.display = "none";
   };
-
-
-  function updateLabels() {
-    // Player
-    document.getElementById("playerName").textContent = localStorage.getItem("playerName");
-    document.getElementById("playerChar").textContent = playerData.character;
-    // Enemy
-    document.getElementById("enemyName").textContent = enemy.name;
-    document.getElementById("enemyChar").textContent = enemy.character;
-
-
-    // Setelah set musuh pertama kali:
-    let enemy = getNextEnemy();
-    document.getElementById("card2Img").src = enemy.image;
-    document.getElementById("card2Img").alt = enemy.character;
-    updateCardInfo();
-    updateLabels();
-
-    // Pada setiap ganti musuh di startBattle, tambahkan updateLabels() setelah updateCardInfo()
-
-  }
 }
