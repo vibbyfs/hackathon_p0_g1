@@ -288,7 +288,11 @@ if (window.location.pathname.includes("game.html")) {
 
       updateScoreBoard();
 
+// <<<<<<< 3hn0c9-codex/sesuaikan-ui-dan-ux-game.html
       showPopup(popupMsg, statusClass);
+=======
+      showPopup(resultMsg);
+// >>>>>>> main
     }, 700); // waktu animasi spinning
   };
 
