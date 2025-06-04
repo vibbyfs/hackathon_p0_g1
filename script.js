@@ -323,6 +323,7 @@ if (window.location.pathname.includes("game.html")) {
       }
 
       updateScoreBoard();
+// <<<<<<< ay4aj4-codex/sesuaikan-ui-dan-ux-game.html
 
       showPopup(popupMsg, statusClass);
     }, 700); // waktu animasi spinning
@@ -341,6 +342,9 @@ if (window.location.pathname.includes("game.html")) {
   window.closePopup = function () {
     const popup = document.getElementById("battlePopup");
     popup.querySelector(".popup-content").classList.remove("win", "lose", "draw");
+
+
+// >>>>>>> main
     popup.style.display = "none";
   };
 }
