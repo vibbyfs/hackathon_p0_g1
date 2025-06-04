@@ -196,6 +196,15 @@ if (document.getElementById("playerInfo")) {
     return enemy;
   }
 
+    if (currentRound >= 3) {
+      alert("Pertarungan sudah selesai!");
+      return;
+    }
+
+
+  window.quitGame = function () {
+    window.location.href = "index.html";
+  };
   let enemyData = chooseEnemy();
   updateScoreboard();
 // <<<<<<< ii9wm8-codex/fix-bug-in-game.html
