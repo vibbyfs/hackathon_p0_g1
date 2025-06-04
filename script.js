@@ -167,6 +167,28 @@ if (window.location.pathname.includes("game.html")) {
   const playerScoreDisplay = document.getElementById("playerScoreDisplay");
   const enemyScoreDisplay = document.getElementById("enemyScoreDisplay");
 
+  const playerHpBar = document.getElementById("playerHpBar");
+  const enemyHpBar = document.getElementById("enemyHpBar");
+
+  function updateLabels() {
+    document.getElementById("playerName").textContent = playerName;
+    document.getElementById("playerChar").textContent = playerData.character;
+    document.getElementById("enemyName").textContent = enemy.name;
+    document.getElementById("enemyChar").textContent = enemy.character;
+  }
+
+  let playerCurrentHp;
+  let enemyCurrentHp;
+
+  function updateCardInfo() {
+    document.getElementById("playerAttr").textContent = playerData.stats.element.toUpperCase();
+    document.getElementById("enemyAttr").textContent = enemy.stats.element.toUpperCase();
+    document.getElementById("playerHp").textContent = playerCurrentHp + " HP";
+    document.getElementById("enemyHp").textContent = enemyCurrentHp + " HP";
+    playerHpBar.style.width = (playerCurrentHp / playerData.stats.hp * 100) + "%";
+    enemyHpBar.style.width = (enemyCurrentHp / enemy.stats.hp * 100) + "%";
+  }
+
   function updateScoreBoard() {
     roundDisplay.textContent = round;
     playerScoreDisplay.textContent = playerScore;
@@ -209,6 +231,10 @@ if (window.location.pathname.includes("game.html")) {
   document.getElementById("card2Img").src = enemy.image;
   document.getElementById("card2Img").alt = enemy.character;
 
+  playerCurrentHp = playerData.stats.hp;
+  enemyCurrentHp = enemy.stats.hp;
+  updateLabels();
+  updateCardInfo();
   updateScoreBoard();
 
   window.startBattle = function () {
@@ -222,12 +248,10 @@ if (window.location.pathname.includes("game.html")) {
       // Ambil stats
       const playerAtk = playerData.stats.atk;
       const playerDef = playerData.stats.def;
-      const playerHp = playerData.stats.hp;
       const playerElem = playerData.stats.element;
 
       const enemyAtk = enemy.stats.atk;
       const enemyDef = enemy.stats.def;
-      const enemyHp = enemy.stats.hp;
       const enemyElem = enemy.stats.element;
 
       // Hitung bonus elemen
@@ -239,8 +263,17 @@ if (window.location.pathname.includes("game.html")) {
       const damageToPlayer = Math.max(1, Math.round((enemyAtk - playerDef) * enemyBonus));
 
       // Sisa HP setelah satu ronde
+// <<<<<<< codex/sesuaikan-ui-dan-ux-game.html
       const playerHpLeft = playerHp - damageToPlayer;
       const enemyHpLeft = enemyHp - damageToEnemy;
+
+      playerCurrentHp = Math.max(0, playerCurrentHp - damageToPlayer);
+      enemyCurrentHp = Math.max(0, enemyCurrentHp - damageToEnemy);
+      updateCardInfo();
+
+      const playerHpLeft = playerCurrentHp;
+      const enemyHpLeft = enemyCurrentHp;
+// >>>>>>> main
 
       let statusClass;
       let popupMsg;
@@ -278,15 +311,24 @@ if (window.location.pathname.includes("game.html")) {
         enemy = getNextEnemy();
         document.getElementById("card2Img").src = enemy.image;
         document.getElementById("card2Img").alt = enemy.character;
+        playerCurrentHp = playerData.stats.hp;
+        enemyCurrentHp = enemy.stats.hp;
+        updateLabels();
+        updateCardInfo();
       } else {
         round++;
         // Ambil musuh baru untuk ronde berikutnya
         enemy = getNextEnemy();
         document.getElementById("card2Img").src = enemy.image;
         document.getElementById("card2Img").alt = enemy.character;
+        playerCurrentHp = playerData.stats.hp;
+        enemyCurrentHp = enemy.stats.hp;
+        updateLabels();
+        updateCardInfo();
       }
 
       updateScoreBoard();
+// <<<<<<< ay4aj4-codex/sesuaikan-ui-dan-ux-game.html
 
       showPopup(popupMsg, statusClass);
     }, 700); // waktu animasi spinning
@@ -305,6 +347,7 @@ if (window.location.pathname.includes("game.html")) {
   window.closePopup = function () {
     const popup = document.getElementById("battlePopup");
     popup.querySelector(".popup-content").classList.remove("win", "lose", "draw");
+// <<<<<<< codex/sesuaikan-ui-dan-ux-game.html
     popup.style.display = "none";
   };
 
@@ -325,7 +368,10 @@ if (window.location.pathname.includes("game.html")) {
     updateCardInfo();
     updateLabels();
 
-    // Pada setiap ganti musuh di startBattle, tambahkan updateLabels() setelah updateCardInfo()
+// >>>>>>> main
 
-  }
+
+// >>>>>>> main
+    popup.style.display = "none";
+  };
 }
