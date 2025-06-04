@@ -242,33 +242,34 @@ if (window.location.pathname.includes("game.html")) {
       const playerHpLeft = playerHp - damageToPlayer;
       const enemyHpLeft = enemyHp - damageToEnemy;
 
-      let resultMsg = `Ronde ${round}:\n`;
-      resultMsg += `Seranganmu: ${damageToEnemy} damage ke musuh (${enemy.character}, elemen: ${enemyElem}).\n`;
-      resultMsg += `Serangan musuh: ${damageToPlayer} damage ke kamu (${playerCharacterName}, elemen: ${playerElem}).\n`;
-
-      if (playerBonus > 1) resultMsg += "Kamu mendapat bonus elemen!\n";
-      if (enemyBonus > 1) resultMsg += "Musuh mendapat bonus elemen!\n";
-
+      let statusClass;
+      let popupMsg;
       if (playerHpLeft > enemyHpLeft) {
-        resultMsg += "Kamu MENANG di ronde ini!\n";
+        statusClass = "win";
+        popupMsg = "MENANG RONDE INI!";
         playerScore++;
       } else if (playerHpLeft < enemyHpLeft) {
-        resultMsg += "Kamu KALAH di ronde ini!\n";
+        statusClass = "lose";
+        popupMsg = "KALAH RONDE INI!";
         enemyScore++;
       } else {
-        resultMsg += "Seri di ronde ini!\n";
+        statusClass = "draw";
+        popupMsg = "SERI RONDE INI!";
       }
 
       // Cek apakah sudah 3 ronde
       if (round === 3) {
-        resultMsg += `\nHASIL AKHIR:\nKamu menang ${playerScore} ronde.\nMusuh menang ${enemyScore} ronde.\n`;
         if (playerScore > enemyScore) {
-          resultMsg += "SELAMAT! Kamu MENANG pertandingan!";
+          popupMsg = "KAMU MENANG PERTANDINGAN!";
+          statusClass = "win";
         } else if (playerScore < enemyScore) {
-          resultMsg += "Kamu KALAH pertandingan!";
+          popupMsg = "KAMU KALAH PERTANDINGAN!";
+          statusClass = "lose";
         } else {
-          resultMsg += "Pertandingan SERI!";
+          popupMsg = "PERTANDINGAN SERI!";
+          statusClass = "draw";
         }
+
         // Reset ronde dan skor untuk pertandingan berikutnya
         round = 1;
         playerScore = 0;
@@ -287,19 +288,24 @@ if (window.location.pathname.includes("game.html")) {
 
       updateScoreBoard();
 
-      showPopup(resultMsg);
+      showPopup(popupMsg, statusClass);
     }, 700); // waktu animasi spinning
   };
 
   // Custom popup battle
-  window.showPopup = function (msg) {
+  window.showPopup = function (msg, status) {
     const popup = document.getElementById("battlePopup");
     const popupText = document.getElementById("popupText");
+    const popupContent = popup.querySelector(".popup-content");
     popupText.innerText = msg;
+    popupContent.classList.remove("win", "lose", "draw");
+    if (status) popupContent.classList.add(status);
     popup.style.display = "flex";
   };
   window.closePopup = function () {
-    document.getElementById("battlePopup").style.display = "none";
+    const popup = document.getElementById("battlePopup");
+    popup.querySelector(".popup-content").classList.remove("win", "lose", "draw");
+    popup.style.display = "none";
   };
 
 
