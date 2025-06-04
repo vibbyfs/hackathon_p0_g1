@@ -135,10 +135,13 @@ if (document.getElementById("playerInfo")) {
   const card1 = document.getElementById("card1");
   const card2 = document.getElementById("card2");
   const scoreboardEl = document.getElementById("scoreboard");
+// <<<<<<< ii9wm8-codex/fix-bug-in-game.html
   const playerHealth = document.getElementById("playerHealth");
   const enemyHealth = document.getElementById("enemyHealth");
   const playerStatsEl = document.getElementById("playerStats");
   const enemyStatsEl = document.getElementById("enemyStats");
+
+// >>>>>>> main
 
   const playerName = localStorage.getItem("playerName") || "Player";
   const playerParty = localStorage.getItem("playerParty");
@@ -155,6 +158,7 @@ if (document.getElementById("playerInfo")) {
     scoreboardEl.textContent = `Round ${currentRound + 1}/3 | Skor ${playerWins}-${enemyWins} | Poin ${points}`;
   }
 
+// <<<<<<< ii9wm8-codex/fix-bug-in-game.html
   function updateStats(enemy) {
     playerStatsEl.textContent = `ATK ${playerData.stats.atk} | DEF ${playerData.stats.def} | HP ${playerData.stats.hp}`;
     enemyStatsEl.textContent = `ATK ${enemy.stats.atk} | DEF ${enemy.stats.def} | HP ${enemy.stats.hp}`;
@@ -174,6 +178,8 @@ if (document.getElementById("playerInfo")) {
     setTimeout(resetHealthBars, 500);
   }
 
+
+// >>>>>>> main
   function chooseEnemy() {
     let available = partaiData.filter(p => p.name !== playerParty && !usedEnemies.includes(p.name));
     if (available.length === 0) {
@@ -183,13 +189,19 @@ if (document.getElementById("playerInfo")) {
     const enemy = available[Math.floor(Math.random() * available.length)];
     usedEnemies.push(enemy.name);
     card2Img.src = enemy.image;
+// <<<<<<< ii9wm8-codex/fix-bug-in-game.html
     updateStats(enemy);
+
+// >>>>>>> main
     return enemy;
   }
 
   let enemyData = chooseEnemy();
   updateScoreboard();
+// <<<<<<< ii9wm8-codex/fix-bug-in-game.html
   resetHealthBars();
+
+// >>>>>>> main
 
   function battle(enemy) {
     const playerScore = playerData.stats.atk + Math.random() * 20 - enemy.stats.def / 2 + playerData.stats.hp / 20;
@@ -198,11 +210,17 @@ if (document.getElementById("playerInfo")) {
     if (playerScore >= enemyScore) {
       playerWins++;
       points += 500;
+// <<<<<<< ii9wm8-codex/fix-bug-in-game.html
       applyBattleResult("player");
       alert(`Kamu menang melawan ${enemy.character}!`);
     } else {
       enemyWins++;
       applyBattleResult("enemy");
+
+      alert(`Kamu menang melawan ${enemy.character}!`);
+    } else {
+      enemyWins++;
+// >>>>>>> main
       alert(`Kamu kalah melawan ${enemy.character}.`);
     }
 

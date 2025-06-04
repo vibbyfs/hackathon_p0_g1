@@ -152,6 +152,7 @@ body {
 }
 
 .scoreboard {
+/* <<<<<<< ii9wm8-codex/fix-bug-in-game.html */
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 30px;
@@ -189,6 +190,11 @@ body {
   color: #fff;
   text-align: center;
   margin-top: 4px;
+
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #ffffff;
+/* >>>>>>> main */
 }
 
 .card-container {
