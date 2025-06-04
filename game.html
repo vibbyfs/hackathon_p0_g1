@@ -30,16 +30,34 @@
             <br />
             <span id="playerChar"></span>
           </div>
+        
+
+
+</div>
+        <div class="score-board">
+          <div>Skor Kamu: <span id="playerScoreDisplay">0</span></div>
+          <div class="round-display">Ronde: <span id="roundDisplay">1</span></div>
+          <div>Skor Musuh: <span id="enemyScoreDisplay">0</span></div>
+          <div>Poin: <span id="pointDisplay">0</span></div>
         </div>
+        <div id="buyMsg" class="buy-msg" style="display: none">Kamu bisa membeli karakter baru!</div>
+
 
         <!-- Area Kartu -->
         <div class="card-container">
           <div class="card" id="card1">
             <div class="card-inner">
               <div class="card-front">
+                <div class="card-name" id="playerCardName"></div>
                 <img id="card1Img" src="" alt="Kartu Pemain" />
-                <div class="card-attr" id="playerAttr"></div>
+                <div class="card-char" id="playerCardChar"></div>
+                <div class="card-stats">
+                  ATK: <span id="playerAtk"></span> |
+                  DEF: <span id="playerDef"></span> |
+                  ELE: <span id="playerAttr"></span>
+                </div>
                 <div class="card-hp" id="playerHp"></div>
+                <div class="hp-bar"><div id="playerHpBar" class="hp-bar-inner"></div></div>
               </div>
               <div class="card-back"></div>
             </div>
@@ -50,9 +68,16 @@
           <div class="card" id="card2">
             <div class="card-inner">
               <div class="card-front">
+                <div class="card-name" id="enemyCardName"></div>
                 <img id="card2Img" src="" alt="Kartu Musuh" />
-                <div class="card-attr" id="enemyAttr"></div>
+                <div class="card-char" id="enemyCardChar"></div>
+                <div class="card-stats">
+                  ATK: <span id="enemyAtk"></span> |
+                  DEF: <span id="enemyDef"></span> |
+                  ELE: <span id="enemyAttr"></span>
+                </div>
                 <div class="card-hp" id="enemyHp"></div>
+                <div class="hp-bar"><div id="enemyHpBar" class="hp-bar-inner"></div></div>
               </div>
               <div class="card-back"></div>
             </div>
