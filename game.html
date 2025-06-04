@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game Kartu</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="btransp">
+    <h1><br></h1>
+    <div class="game-wrapper">
+      <!-- Info Pemain -->
+      <div id="playerInfo" class="player-info"></div>
+
+      <!-- Area Kartu -->
+      <div class="card-container">
+        <div class="card" id="card1">
+          <div class="card-inner">
+            <div class="card-front">
+              <img id="card1Img" src="" alt="Kartu Pemain" />
+            </div>
+            <div class="card-back"></div>
+          </div>
+        </div>
+
+        <div class="vs-text">VS</div>
+
+        <div class="card" id="card2">
+          <div class="card-inner">
+            <div class="card-front">
+              <img id="card2Img" src="" alt="Kartu Musuh" />
+            </div>
+            <div class="card-back"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Battle -->
+      <span>
+        <button class="battle-btn" onclick="startBattle()">Battle</button>
+        <a href="index.html"><button class="battle-btn" onclick="">Quit</button></a>
+      </span>
+    </div>
+  </div>
+  
+
+  <script src="script.js"></script>
+</body>
+</html>
