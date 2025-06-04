@@ -272,3 +272,17 @@ body {
   text-align: right;
   min-width: 180px;
 }
+
+.score-board {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-family: "Black Ops One", Arial, sans-serif;
+  color: #fff;
+}
+.score-board div {
+  background: rgba(0,0,0,0.6);
+  padding: 6px 12px;
+  border-radius: 8px;
+}

@@ -163,6 +163,16 @@ if (window.location.pathname.includes("game.html")) {
   document.getElementById("card1Img").src = playerCharacter;
   document.getElementById("card1Img").alt = playerCharacterName;
 
+  const roundDisplay = document.getElementById("roundDisplay");
+  const playerScoreDisplay = document.getElementById("playerScoreDisplay");
+  const enemyScoreDisplay = document.getElementById("enemyScoreDisplay");
+
+  function updateScoreBoard() {
+    roundDisplay.textContent = round;
+    playerScoreDisplay.textContent = playerScore;
+    enemyScoreDisplay.textContent = enemyScore;
+  }
+
   // --- Simpan data karakter pemain ---
   const playerData = partaiData.find(p => p.name === playerParty);
 
@@ -198,6 +208,8 @@ if (window.location.pathname.includes("game.html")) {
   let enemy = getNextEnemy();
   document.getElementById("card2Img").src = enemy.image;
   document.getElementById("card2Img").alt = enemy.character;
+
+  updateScoreBoard();
 
   window.startBattle = function () {
     // Animasi spinning pada kartu musuh
@@ -272,6 +284,8 @@ if (window.location.pathname.includes("game.html")) {
         document.getElementById("card2Img").src = enemy.image;
         document.getElementById("card2Img").alt = enemy.character;
       }
+
+      updateScoreBoard();
 
       showPopup(resultMsg);
     }, 700); // waktu animasi spinning
