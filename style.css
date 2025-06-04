@@ -287,14 +287,31 @@ body {
 
 .score-board {
   display: flex;
-  gap: 30px;
+  gap: 40px;
   justify-content: center;
   margin-bottom: 20px;
   font-family: "Black Ops One", Arial, sans-serif;
   color: #fff;
+  font-size: 20px;
 }
 .score-board div {
-  background: rgba(0,0,0,0.6);
-  padding: 6px 12px;
-  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.4));
+  padding: 8px 16px;
+  border-radius: 10px;
+  min-width: 150px;
+}
+
+.hp-bar {
+  width: 100%;
+  height: 8px;
+  background: #555;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+.hp-bar-inner {
+  height: 100%;
+  background: #e74c3c;
+  border-radius: 4px;
+  width: 100%;
+  transition: width 0.3s ease;
 }
