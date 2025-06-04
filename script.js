@@ -166,6 +166,19 @@ if (window.location.pathname.includes("game.html")) {
   const roundDisplay = document.getElementById("roundDisplay");
   const playerScoreDisplay = document.getElementById("playerScoreDisplay");
   const enemyScoreDisplay = document.getElementById("enemyScoreDisplay");
+  const pointDisplay = document.getElementById("pointDisplay");
+
+  const playerCardName = document.getElementById("playerCardName");
+  const playerCardChar = document.getElementById("playerCardChar");
+  const playerAtkLabel = document.getElementById("playerAtk");
+  const playerDefLabel = document.getElementById("playerDef");
+  const enemyCardName = document.getElementById("enemyCardName");
+  const enemyCardChar = document.getElementById("enemyCardChar");
+  const enemyAtkLabel = document.getElementById("enemyAtk");
+  const enemyDefLabel = document.getElementById("enemyDef");
+
+  let points = parseInt(localStorage.getItem("points") || "0");
+  pointDisplay.textContent = points;
 
   const playerHpBar = document.getElementById("playerHpBar");
   const enemyHpBar = document.getElementById("enemyHpBar");
@@ -181,8 +194,17 @@ if (window.location.pathname.includes("game.html")) {
   let enemyCurrentHp;
 
   function updateCardInfo() {
+    playerCardName.textContent = playerData.name;
+    playerCardChar.textContent = playerData.character;
+    enemyCardName.textContent = enemy.name;
+    enemyCardChar.textContent = enemy.character;
+
     document.getElementById("playerAttr").textContent = playerData.stats.element.toUpperCase();
     document.getElementById("enemyAttr").textContent = enemy.stats.element.toUpperCase();
+    playerAtkLabel.textContent = playerData.stats.atk;
+    playerDefLabel.textContent = playerData.stats.def;
+    enemyAtkLabel.textContent = enemy.stats.atk;
+    enemyDefLabel.textContent = enemy.stats.def;
     document.getElementById("playerHp").textContent = playerCurrentHp + " HP";
     document.getElementById("enemyHp").textContent = enemyCurrentHp + " HP";
     playerHpBar.style.width = (playerCurrentHp / playerData.stats.hp * 100) + "%";
@@ -193,6 +215,17 @@ if (window.location.pathname.includes("game.html")) {
     roundDisplay.textContent = round;
     playerScoreDisplay.textContent = playerScore;
     enemyScoreDisplay.textContent = enemyScore;
+    pointDisplay.textContent = points;
+    checkUnlock();
+  }
+
+  function checkUnlock() {
+    const buyMsg = document.getElementById("buyMsg");
+    if (points >= 50000) {
+      buyMsg.style.display = "block";
+    } else {
+      buyMsg.style.display = "none";
+    }
   }
 
   // --- Simpan data karakter pemain ---
@@ -281,6 +314,8 @@ if (window.location.pathname.includes("game.html")) {
         statusClass = "win";
         popupMsg = "MENANG RONDE INI!";
         playerScore++;
+        points += 500;
+        localStorage.setItem("points", points);
       } else if (playerHpLeft < enemyHpLeft) {
         statusClass = "lose";
         popupMsg = "KALAH RONDE INI!";
