@@ -297,6 +297,14 @@ if (window.location.pathname.includes("game.html")) {
 
       // Sisa HP setelah satu ronde
 // <<<<<<< codex/sesuaikan-ui-dan-ux-game.html
+      playerCurrentHp = Math.max(0, playerCurrentHp - damageToPlayer);
+      enemyCurrentHp = Math.max(0, enemyCurrentHp - damageToEnemy);
+      updateCardInfo();
+
+      const playerHpLeft = playerCurrentHp;
+      const enemyHpLeft = enemyCurrentHp;
+
+// <<<<<<< codex/sesuaikan-ui-dan-ux-game.html
       const playerHpLeft = playerHp - damageToPlayer;
       const enemyHpLeft = enemyHp - damageToEnemy;
 
@@ -306,6 +314,7 @@ if (window.location.pathname.includes("game.html")) {
 
       const playerHpLeft = playerCurrentHp;
       const enemyHpLeft = enemyCurrentHp;
+// >>>>>>> main
 // >>>>>>> main
 
       let statusClass;
@@ -363,7 +372,9 @@ if (window.location.pathname.includes("game.html")) {
       }
 
       updateScoreBoard();
+// <<<<<<< codex/sesuaikan-ui-dan-ux-game.htm
 // <<<<<<< ay4aj4-codex/sesuaikan-ui-dan-ux-game.html
+// >>>>>>> main
 
       showPopup(popupMsg, statusClass);
     }, 700); // waktu animasi spinning
@@ -382,6 +393,10 @@ if (window.location.pathname.includes("game.html")) {
   window.closePopup = function () {
     const popup = document.getElementById("battlePopup");
     popup.querySelector(".popup-content").classList.remove("win", "lose", "draw");
+// <<<<<<< codex/sesuaikan-ui-dan-ux-game.html
+    popup.style.display = "none";
+  };
+
 // <<<<<<< codex/sesuaikan-ui-dan-ux-game.html
     popup.style.display = "none";
   };
@@ -409,4 +424,5 @@ if (window.location.pathname.includes("game.html")) {
 // >>>>>>> main
     popup.style.display = "none";
   };
+// >>>>>>> main
 }
