@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Anomali Fighters</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="btransp">
+    <div class="page">
+      <div class="pagetop">
+        <p><br></p>
+        <h1>ANOMALI FIGHTERS</h1>
+        <p><br></p>
+      </div>
+      <div class="pagemid">
+        <div></div>
+        <div class="start-wrapper">
+          <!--Form kiri--> 
+          <div class="form-section">
+            <h1>Masuk Game</h1>
+            <input type="text" id="nameInput" placeholder="Masukkan Nama" />
+            <select id="partySelect" onchange="updateCharacter()">
+              <option value="" disabled selected>Pilih Anomalimu!</option>
+            </select>
+            <button onclick="startGame()">Play</button>
+          </div>
+          <!--Preview Karakter tengah-->
+          <div class="character-preview" id="characterPreview">
+            <h2>Karakter Kamu:</h2>
+            <div class="character-card">
+              <div class="card-inner">
+                <img id="characterImg" src="assets/blank.png" alt="Karakter" />
+                <div class="card-title" id="characterName">
+                  Silakan pilih partai
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- desc -->
+          <div id="description-box">
+            <h1 id="descTitle">Pilih Anomali</h1>
+            <p id="descText">Pilih anomalimu sesuai dengan khodam anda</p>
+          </div>
+        </div>
+        <div></div>
+      </div>
+      <div class="pagebot">
+        <p><br><br>Created by Kelompok 2</p>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
