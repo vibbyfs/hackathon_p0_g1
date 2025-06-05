@@ -155,16 +155,32 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  gap: 40px;
-  width: 100vh
+  gap: 60px;
+  width: 100%;
+}
+
+.left-panel {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-panel {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 500px;
 }
 
 .button-panel {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 24px;
-  align-items: flex-start;
-  /* margin-top: 5rem; */
+  margin-top: 60px;
 }
 
 .button-panel .battle-btn {
@@ -344,4 +360,27 @@ body {
   align-items: center !important;
   justify-content: center !important;
   z-index: 9999 !important;
+}
+
+/* Tambahkan di style.css */
+.modal {
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-content {
+  background: #fff;
+  padding: 24px 32px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 250px;
+  font-size: 1.2em;
+}
+.close {
+  position: absolute;
+  right: 24px;
+  top: 16px;
+  font-size: 2em;
 }

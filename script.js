@@ -46,7 +46,7 @@ const partaiData = [
     name: "Demokravox",
     character: "Arhymon, The Heir of Hollow Echoes",
     image: "assets/char5.png",
-    desc: "Biru yang dulu lantang membela rakyat kini memudar jadi bayang-bayang warisan. Partai tak lagi bergerak karena suara, tapi demi menjaga tahta keluarga di tengah panggung politik yang terus berubah.",
+    desc: "Biru yang dulu lantang membela rakyat kini memudar jadi bayang-bayang warisan. Guild tak lagi bergerak karena suara, tapi demi menjaga tahta keluarga di tengah panggung politik yang terus berubah.",
     stats: { atk: 78, def: 72, hp: 98, element: "void" }
   },
   {
@@ -98,12 +98,8 @@ if (window.location.pathname.includes("game.html")) {
   };
 
   function getElementBonus(attacker, defender) {
-    if (elementAdvantage[attacker] && elementAdvantage[attacker].includes(defender)) {
-      return 1.2; // 20% bonus
-    }
-    if (elementAdvantage[defender] && elementAdvantage[defender].includes(attacker)) {
-      return 0.8; // 20% penalty
-    }
+    if (elementAdvantage[attacker] && elementAdvantage[attacker].includes(defender)) return 1.2;
+    if (elementAdvantage[defender] && elementAdvantage[defender].includes(attacker)) return 0.8;
     return 1;
   }
 
@@ -131,8 +127,6 @@ if (window.location.pathname.includes("game.html")) {
   // Array musuh acak (tanpa karakter pemain)
   let enemyPool = [];
   let enemyIndex = 0;
-
-  // Tambahkan array untuk menyimpan index musuh yang sudah tampil dalam satu putaran
   let usedEnemyIndexes = [];
 
   function shuffleEnemyPool() {
@@ -142,6 +136,7 @@ if (window.location.pathname.includes("game.html")) {
       [enemyPool[i], enemyPool[j]] = [enemyPool[j], enemyPool[i]];
     }
     enemyIndex = 0;
+    usedEnemyIndexes = [];
   }
 
   shuffleEnemyPool();
@@ -165,23 +160,17 @@ if (window.location.pathname.includes("game.html")) {
 
   // Fungsi untuk ambil musuh berikutnya
   function getNextEnemy() {
-    // Jika sudah 3 musuh dipakai dalam satu putaran, reset untuk putaran berikutnya
     if (usedEnemyIndexes.length >= 3) {
       usedEnemyIndexes = [];
+      shuffleEnemyPool();
     }
-
-    // Cari index musuh yang belum dipakai di putaran ini
     let availableIndexes = enemyPool
       .map((_, idx) => idx)
       .filter(idx => !usedEnemyIndexes.includes(idx));
-
-    // Jika semua sudah dipakai (harusnya tidak terjadi), reset
     if (availableIndexes.length === 0) {
-      usedEnemyIndexes = [];
+      shuffleEnemyPool();
       availableIndexes = enemyPool.map((_, idx) => idx);
     }
-
-    // Pilih index acak dari yang tersedia
     const randomIdx = availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
     usedEnemyIndexes.push(randomIdx);
     return enemyPool[randomIdx];
@@ -216,233 +205,92 @@ if (window.location.pathname.includes("game.html")) {
     `;
   }
 
-  function resetEnemy() {
-    enemy = getNextEnemy();
-    document.getElementById("card2Img").src = enemy.image;
-    document.getElementById("card2Img").alt = enemy.character;
-  }
-
-<<<<<<< HEAD
-  function resetHealthBars() {
-    playerHealth.style.width = "100%";
-    enemyHealth.style.width = "100%";
-  }
-
-  function applyBattleResult(winner) {
-    if (winner === "player") {
-      enemyHealth.style.width = "0%";
-    } else {
-      playerHealth.style.width = "0%";
-    }
-    setTimeout(resetHealthBars, 500);
-  }
-
-
-// >>>>>>> main
-  function chooseEnemy() {
-    let available = partaiData.filter(p => p.name !== playerParty && !usedEnemies.includes(p.name));
-    if (available.length === 0) {
-      usedEnemies = [];
-      available = partaiData.filter(p => p.name !== playerParty);
-    }
-    const enemy = available[Math.floor(Math.random() * available.length)];
-    usedEnemies.push(enemy.name);
-    card2Img.src = enemy.image;
-// <<<<<<< ii9wm8-codex/fix-bug-in-game.html
-    updateStats(enemy);
-
-// >>>>>>> main
-    return enemy;
-  }
-
-    if (currentRound >= 3) {
-      alert("Pertarungan sudah selesai!");
-      return;
-    }
-
-
-  window.quitGame = function () {
-    window.location.href = "index.html";
-  };
-  let enemyData = chooseEnemy();
-  updateScoreboard();
-// <<<<<<< ii9wm8-codex/fix-bug-in-game.html
-  resetHealthBars();
-
-// >>>>>>> main
-
-  function battle(enemy) {
-    const playerScore = playerData.stats.atk + Math.random() * 20 - enemy.stats.def / 2 + playerData.stats.hp / 20;
-    const enemyScore = enemy.stats.atk + Math.random() * 20 - playerData.stats.def / 2 + enemy.stats.hp / 20;
-
-    if (playerScore >= enemyScore) {
-      playerWins++;
-      points += 500;
-// <<<<<<< ii9wm8-codex/fix-bug-in-game.html
-      applyBattleResult("player");
-      alert(`Kamu menang melawan ${enemy.character}!`);
-    } else {
-      enemyWins++;
-      applyBattleResult("enemy");
-
-      alert(`Kamu menang melawan ${enemy.character}!`);
-    } else {
-      enemyWins++;
-// >>>>>>> main
-      alert(`Kamu kalah melawan ${enemy.character}.`);
-    }
-
-    currentRound++;
-    localStorage.setItem("playerPoints", points);
-    if (currentRound >= 3) {
-      updateScoreboard();
-      alert(`Pertarungan selesai! Skor akhir ${playerWins}-${enemyWins}. Total poin: ${points}`);
-      return;
-    }
-
-    enemyData = chooseEnemy();
-=======
   function updateAll() {
     updateStats();
     updateHealthBar();
->>>>>>> bdb3a71 (second commit)
     updateScoreboard();
   }
 
   updateAll();
 
+  // Tambahkan fungsi popup
+  function showPopup(message, sound) {
+    const modal = document.getElementById("popupModal");
+    const msg = document.getElementById("popupMessage");
+    msg.textContent = message;
+    modal.style.display = "flex";
+    if (sound) sound.play();
+  }
+
+  // Tutup modal saat klik X atau area luar
+  document.getElementById("closeModal").onclick = function() {
+    document.getElementById("popupModal").style.display = "none";
+  };
+  window.onclick = function(event) {
+    const modal = document.getElementById("popupModal");
+    if (event.target === modal) modal.style.display = "none";
+  };
+
   window.startBattle = function () {
     if (gameOver) return;
-    const enemyCard = document.getElementById("card2");
-    enemyCard.classList.add("spinning");
 
-    setTimeout(() => {
-      enemyCard.classList.remove("spinning");
+    const playerBonus = getElementBonus(playerData.stats.element, enemy.stats.element);
+    const enemyBonus = getElementBonus(enemy.stats.element, playerData.stats.element);
 
-      // Ambil stats
-      const playerAtk = playerData.stats.atk;
-      const playerDef = playerData.stats.def;
-      const playerElem = playerData.stats.element;
+    const playerPower = playerData.stats.atk * playerBonus + Math.random() * 10 + playerData.stats.hp / 20;
+    const enemyPower = enemy.stats.atk * enemyBonus + Math.random() * 10 + enemy.stats.hp / 20;
 
-      const enemyAtk = enemy.stats.atk;
-      const enemyDef = enemy.stats.def;
-      const enemyElem = enemy.stats.element;
+    let resultMsg = "";
+    let sound = null;
+    if (playerPower > enemyPower) {
+      playerScore++;
+      enemyRoundHp--;
+      points += 500;
+      sound = audioWin;
+      resultMsg = `Kamu menang melawan ${enemy.character}!`;
+    } else if (playerPower < enemyPower) {
+      enemyScore++;
+      playerRoundHp--;
+      sound = audioLose;
+      resultMsg = `Kamu kalah melawan ${enemy.character}.`;
+    } else {
+      sound = audioDraw;
+      resultMsg = `Seri melawan ${enemy.character}.`;
+    }
 
-      // Hitung bonus elemen
-      const playerBonus = getElementBonus(playerElem, enemyElem);
-      const enemyBonus = getElementBonus(enemyElem, playerElem);
+    round++;
+    updateAll();
 
-      // Hitung damage (untuk penentuan pemenang ronde)
-      const damageToEnemy = Math.max(1, Math.round((playerAtk - enemyDef) * playerBonus));
-      const damageToPlayer = Math.max(1, Math.round((enemyAtk - playerDef) * enemyBonus));
+    // Cek akhir game
+    if (playerRoundHp === 0 || enemyRoundHp === 0 || round > 3) {
+      gameOver = true;
+      localStorage.setItem("points", points);
+      setTimeout(() => {
+        showPopup(`Game selesai! Skor kamu: ${playerScore}, Musuh: ${enemyScore}. Total poin: ${points}`, sound);
+      }, 300);
+      return;
+    }
 
-      // Penentuan pemenang ronde & update HP bar berbasis ronde
-      let statusClass;
-      let popupMsg;
-      if (damageToEnemy > damageToPlayer) {
-        statusClass = "win";
-        popupMsg = "MENANG RONDE INI!";
-        playerScore++;
-        points += 500;
-        enemyRoundHp = Math.max(0, enemyRoundHp - 1);
-        localStorage.setItem("points", points);
-      } else if (damageToEnemy < damageToPlayer) {
-        statusClass = "lose";
-        popupMsg = "KALAH RONDE INI!";
-        enemyScore++;
-        playerRoundHp = Math.max(0, playerRoundHp - 1);
-      } else {
-        statusClass = "draw";
-        popupMsg = "SERI RONDE INI!";
-        // Tidak ada perubahan HP bar
-      }
+    // Ganti musuh
+    enemy = getNextEnemy();
+    document.getElementById("card2Img").src = enemy.image;
+    document.getElementById("card2Img").alt = enemy.character;
+    updateAll();
 
-      updateAll();
-
-      // Cek apakah sudah 3 ronde (1 putaran)
-      if (round === 3) {
-        gameOver = true;
-        if (playerScore > enemyScore) {
-          popupMsg = "KAMU MENANG PUTARAN!";
-          statusClass = "win";
-        } else if (playerScore < enemyScore) {
-          popupMsg = "KAMU KALAH PUTARAN!";
-          statusClass = "lose";
-        } else {
-          popupMsg = "PUTARAN SERI!";
-          statusClass = "draw";
-        }
-        showPopup(popupMsg + " Tekan Reset Game untuk mulai lagi.", statusClass, true);
-      } else {
-        round++;
-        resetEnemy();
-        updateAll();
-        showPopup(popupMsg, statusClass, false);
-      }
-    }, 700);
+    setTimeout(() => showPopup(resultMsg, sound), 200);
   };
 
   window.resetGame = function () {
     round = 1;
     playerScore = 0;
     enemyScore = 0;
-    gameOver = false;
     playerRoundHp = 3;
     enemyRoundHp = 3;
+    gameOver = false;
     shuffleEnemyPool();
-    usedEnemyIndexes = [];
-    resetEnemy();
+    enemy = getNextEnemy();
+    document.getElementById("card2Img").src = enemy.image;
+    document.getElementById("card2Img").alt = enemy.character;
     updateAll();
-    closePopup();
-  };
-
-  window.showPopup = function (msg, status, isRoundWin = false) {
-    let popup = document.getElementById("battlePopup");
-    if (!popup) {
-      popup = document.createElement("div");
-      popup.id = "battlePopup";
-      popup.style.position = "fixed";
-      popup.style.top = "0";
-      popup.style.left = "0";
-      popup.style.width = "100vw";
-      popup.style.height = "100vh";
-      popup.style.background = "rgba(0,0,0,0.7)";
-      popup.style.display = "flex";
-      popup.style.alignItems = "center";
-      popup.style.justifyContent = "center";
-      popup.style.zIndex = "9999";
-      popup.innerHTML = `
-        <div class="popup-content" style="background:#fff;padding:32px 48px;border-radius:16px;text-align:center;min-width:300px;position:relative;">
-          <div id="popupText" style="font-size:2rem;font-weight:bold;margin-bottom:18px;"></div>
-          <button onclick="closePopup()" style="padding:8px 24px;font-size:1.2rem;border:none;border-radius:8px;background:crimson;color:#fff;cursor:pointer;">OK</button>
-        </div>
-      `;
-      document.body.appendChild(popup);
-    }
-    const popupText = document.getElementById("popupText");
-    const popupContent = popup.querySelector(".popup-content");
-    popupText.innerText = msg;
-    popupContent.classList.remove("win", "lose", "draw");
-    if (status) popupContent.classList.add(status);
-    popup.style.display = "flex";
-
-    // Play audio sesuai status
-    if (isRoundWin && status === "win") {
-      audioRoundWin.currentTime = 0; audioRoundWin.play();
-    } else if (status === "win") {
-      audioWin.currentTime = 0; audioWin.play();
-    } else if (status === "lose") {
-      audioLose.currentTime = 0; audioLose.play();
-    } else if (status === "draw") {
-      audioDraw.currentTime = 0; audioDraw.play();
-    }
-  };
-
-  window.closePopup = function () {
-    const popup = document.getElementById("battlePopup");
-    if (popup) {
-      popup.querySelector(".popup-content").classList.remove("win", "lose", "draw");
-      popup.style.display = "none";
-    }
   };
 }
