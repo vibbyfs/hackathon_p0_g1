@@ -1,62 +1,262 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login | Anomali Fighters</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div class="btransp">
-    <div class="page">
-      <div class="pagetop">
-        <p><br></p>
-        <h1>ANOMALI FIGHTERS</h1>
-        <p><br></p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Anomali Fighters</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Tambahkan audio dan tombol mute/unmute -->
+    <div id="musicPrompt" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2000;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;">
+      <div style="background:#fff;padding:32px 40px;border-radius:18px;text-align:center;box-shadow:0 2px 24px #000a;">
+        <div style="font-size:1.3rem;font-weight:bold;color:#d30000;margin-bottom:18px;">Aktifkan Musik?</div>
+        <button id="musicYes" style="padding:10px 28px;font-size:1.1rem;margin:0 12px 0 0;border-radius:8px;border:none;background:#ff5e1f;color:#fff;cursor:pointer;">Ya</button>
+        <button id="musicNo" style="padding:10px 28px;font-size:1.1rem;border-radius:8px;border:none;background:#888;color:#fff;cursor:pointer;">Tidak</button>
       </div>
-      <div class="pagemid">
-        <div></div>
-        <div class="start-wrapper">
-          <!--Form kiri--> 
-          <div class="form-section">
-            <h1>Masuk Game</h1>
-            <input type="text" id="nameInput" placeholder="Masukkan Nama" />
-            <select id="partySelect" onchange="updateCharacter()">
-              <option value="" disabled selected>Pilih Anomalimu!</option>
-            </select>
-            <button onclick="startGame()">Play</button>
-          </div>
-          <!--Preview Karakter tengah-->
-          <div class="character-preview" id="characterPreview">
-            <h2>Karakter Kamu:</h2>
-            <div class="character-card">
-              <div class="card-inner">
-                <img id="characterImg" src="assets/blank.png" alt="Karakter" />
-                <div class="card-title" id="characterName">
-                  Silakan pilih partai
+    </div>
+    <audio id="bgm" src="audio/ir.mp3" loop></audio>
+    <button
+      id="muteBtn"
+      style="
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        z-index: 1000;
+        padding: 10px 18px;
+        font-size: 1rem;
+        border-radius: 8px;
+        border: none;
+        background: #ff5e1f;
+        color: #fff;
+        cursor: pointer;
+        display:none;
+      "
+    >
+      🔊 Mute
+    </button>
+    <div class="btransp">
+      <div class="page">
+        <div class="pagetop">
+          <p><br /></p>
+          <h1>ANOMALI FIGHTERS</h1>
+          <p><br /></p>
+        </div>
+        <div class="pagemid">
+          <div></div>
+          <div class="start-wrapper">
+            <!--Form kiri-->
+            <div class="form-section">
+              <h1>Masuk Game</h1>
+              <input type="text" id="nameInput" placeholder="Masukkan Nama" />
+              <select id="partySelect" onchange="updateCharacter()">
+                <option value="" disabled selected>Pilih Anomalimu!</option>
+              </select>
+              <button onclick="startGame()">Play</button>
+            </div>
+            <!--Preview Karakter tengah-->
+            <div class="character-preview" id="characterPreview">
+              <h2>Karakter Kamu:</h2>
+              <div class="character-card">
+                <div class="card-inner">
+                  <img
+                    id="characterImg"
+                    src="assets/blank.png"
+                    alt="Karakter"
+                  />
+                  <div class="card-title" id="characterName">
+                    Silakan pilih partai
+                  </div>
                 </div>
               </div>
             </div>
+            <!-- desc -->
+            <div id="description-box">
+              <h1 id="descTitle">Pilih Anomali</h1>
+              <p id="descText">Pilih anomalimu sesuai dengan khodam anda</p>
+            </div>
           </div>
-          <!-- desc -->
-          <div id="description-box">
-            <h1 id="descTitle">Pilih Anomali</h1>
-            <p id="descText">Pilih anomalimu sesuai dengan khodam anda</p>
-          </div>
+          <div></div>
         </div>
-        <div></div>
-      </div>
-      <div class="pagebot">
-        <p><br><br>Created by Kelompok 2</p>
+        <!-- Tambahkan link ke character.html di bawah form -->
+        <!-- ...existing code... -->
+        <div class="pagebot">
+          <a href="character.html">
+            <button class="battle-btn" type="button" style="margin-top: 16px">
+              Karakter Anomali
+            </button>
+          </a>
+          <p><br /><br />Created by Kelompok 2</p>
+        </div>
+        <!-- ...existing code... -->
       </div>
     </div>
-  </div>
-  
-  
+    <script>
+      // Pastikan script.js tetap bisa jalan jika file di-load langsung
+      const partaiData = [
+        {
+          name: "Padiptra Mourningroot",
+          character: "Magaweidah, The Crimson Matron",
+          image: "assets/char1.png",
+          desc: "Banteng Merah itu kini tak lagi menyeruduk demi rakyat, tapi siap menggulingkan siapa pun—bahkan keadilan—demi menjaga tahta sang Ratu yang memerintah dari balik layar.",
+          stats: { atk: 80, def: 60, hp: 100, element: "fire" },
+        },
+        {
+          name: "Grindraksa Legion",
+          character: "Pravornox, The Iron Oath",
+          image: "assets/char2.png",
+          desc: "Sang Burung yang ditunggangi Tuannya meski harus 4 kali terjatuh tapi kini berjaya mengantarkan Tuannya sampai ke tahta diatas penderitaan rakyatnya.",
+          stats: { atk: 75, def: 80, hp: 110, element: "earth" },
+        },
+        {
+          name: "Goqhlarnyx Assembly",
+          character: "Hartanox, The Bureaucratic Husk",
+          image: "assets/char3.png",
+          desc: "Kuning yang dulu lambang kemakmuran kini jadi simbol kebisuan. Beringin tak lagi menaungi rakyat, tapi membelit kekuasaan demi menjaga warisan dinasti yang enggan tumbang.",
+          stats: { atk: 65, def: 90, hp: 120, element: "metal" },
+        },
+        {
+          name: "Nas'drem Coils",
+          character: "Surapalux, The Radiant Maw",
+          image: "assets/char4.png",
+          desc: "Dulu yang katanya warna perubahan kini justru tenggelam dalam arus kepentingan. Sekarang tak lagi mendayung harapan rakyat, tapi berlayar untuk ambisi elit yang bersembunyi di balik jargon restorasi.",
+          stats: { atk: 85, def: 70, hp: 95, element: "light" },
+        },
+        {
+          name: "Pekabhan Maw",
+          character: "Mukhaegrim, The Laughing Vulture",
+          image: "assets/char7.png",
+          desc: "Mereka melangkah dengan spirit santri, menjadikan kebaikan sebagai pedoman. Di tengah hiruk politik, mereka berikhtiar menyalakan cahaya akhlak dan memperjuangkan kemaslahatan umat.",
+          stats: { atk: 70, def: 75, hp: 105, element: "wind" },
+        },
+        {
+          name: "Peksithra Creed",
+          character: "Syaikhuloth, The Cloaked Scribe",
+          image: "assets/char6.png",
+          desc: "Kami tak lagi bersujud untuk rakyat, tapi berlutut di altar kekuasaan. Di balik jubah moral dan dakwah, tersembunyi hasrat akan panggung dan posisi—agama dijadikan alat, bukan lagi cahaya.",
+          stats: { atk: 60, def: 85, hp: 100, element: "shadow" },
+        },
+        {
+          name: "Demokravox",
+          character: "Arhymon, The Heir of Hollow Echoes",
+          image: "assets/char5.png",
+          desc: "Biru yang dulu lantang membela rakyat kini memudar jadi bayang-bayang warisan. Partai tak lagi bergerak karena suara, tapi demi menjaga tahta keluarga di tengah panggung politik yang terus berubah.",
+          stats: { atk: 78, def: 72, hp: 98, element: "void" },
+        },
+        {
+          name: "Panarch Hive",
+          character: "Zulhazir, The Smiling Serpent",
+          image: "assets/char9.png",
+          desc: "Bukan lagi penjaga nurani, tapi makelar kekuasaan. Langit birunya pudar, diganti tawar-menawar di balik layar—demi kursi, bukan keadilan.",
+          stats: { atk: 68, def: 65, hp: 102, element: "poison" },
+        },
+        {
+          name: "Perindrak Maw",
+          character: "Tanovark, The Media Maw",
+          image: "assets/char10.png",
+          desc: "Kami kini bukan gelombang perubahan, tapi perahu pesanan kaum elit. Berlayar megah dengan jargon rakyat, tapi haluannya patuh pada satu nakhoda—bukan suara, melainkan selera penguasa.",
+          stats: { atk: 72, def: 68, hp: 100, element: "electric" },
+        },
+        {
+          name: "Hanurath Shard",
+          character: "Osparum, The Relic Roar",
+          image: "assets/char11.png",
+          desc: "Kita kini tak lagi berdiri untuk suara hati nurani rakyat, tapi jadi perisai bisu bagi kepentingan para elite—rela menukar idealisme demi sejumput kekuasaan yang dikendalikan dari balik bayang kekuasaan lama.",
+          stats: { atk: 74, def: 70, hp: 108, element: "stone" },
+        },
+        {
+          name: "Psychonautic Spawns",
+          character: "Caesar, Magical Child",
+          image: "assets/char13.png",
+          desc: "Bunga Mawar Merah itu kini tak lagi mekar untuk harapan dan keberanian, tapi tumbuh di taman kekuasaan, disiram oleh pujian istana. Ia tak segan menusuk dengan durinya siapa pun yang mengganggu narasi para elit—menjadi penjaga gincu kekuasaan, bukan suara rakyat.",
+          stats: { atk: 90, def: 50, hp: 95, element: "chaos" },
+        },
+      ];
 
-  <script src="script.js"></script>
-</body>
+      // Isi dropdown partai
+      const partySelect = document.getElementById("partySelect");
+      partaiData.forEach((partai) => {
+        const opt = document.createElement("option");
+        opt.value = partai.name;
+        opt.textContent = partai.name;
+        partySelect.appendChild(opt);
+      });
+
+      window.updateCharacter = function () {
+        const selected = partySelect.value;
+        const data = partaiData.find((p) => p.name === selected);
+        if (data) {
+          document.getElementById("characterName").textContent = data.character;
+          document.getElementById("characterImg").src = data.image;
+          document.getElementById("descTitle").textContent = data.name;
+          document.getElementById("descText").textContent = data.desc;
+        }
+      };
+
+      window.startGame = function () {
+        const name = document.getElementById("nameInput").value;
+        const party = partySelect.value;
+        const data = partaiData.find((p) => p.name === party);
+
+        if (!name || !party || !data) {
+          alert("Silakan isi nama dan pilih Anomali.");
+          return;
+        }
+
+        localStorage.setItem("playerName", name);
+        localStorage.setItem("playerParty", party);
+        localStorage.setItem("playerCharacter", data.image);
+        localStorage.setItem("playerCharacterName", data.character);
+
+        window.location.href = "game.html";
+      };
+
+      // Audio mute/unmute logic
+      const bgm = document.getElementById("bgm");
+      const muteBtn = document.getElementById("muteBtn");
+      const musicPrompt = document.getElementById("musicPrompt");
+      let isMuted = false;
+
+      // Tampilkan tombol mute hanya jika musik aktif
+      function showMuteBtn(show) {
+        muteBtn.style.display = show ? "inline-block" : "none";
+      }
+
+      // Pilihan user: YA
+      document.getElementById("musicYes").onclick = function () {
+        musicPrompt.style.display = "none";
+        bgm.muted = false;
+        bgm.currentTime = 0;
+        bgm.play();
+        showMuteBtn(true);
+      };
+
+      // Pilihan user: TIDAK
+      document.getElementById("musicNo").onclick = function () {
+        musicPrompt.style.display = "none";
+        bgm.pause();
+        bgm.currentTime = 0;
+        showMuteBtn(false);
+      };
+
+      // Tombol mute/unmute
+      muteBtn.onclick = function () {
+        isMuted = !isMuted;
+        bgm.muted = isMuted;
+        muteBtn.textContent = isMuted ? "🔇 Unmute" : "🔊 Mute";
+      };
+
+      // Optional: Autoplay fix for some browsers (play after user interaction)
+      document.body.addEventListener("click", function playOnce() {
+        bgm.play();
+        document.body.removeEventListener("click", playOnce);
+      });
+    </script>
+  </body>
 </html>

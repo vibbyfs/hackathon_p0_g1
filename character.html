@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daftar Karakter | Anomali Fighters</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: #181818;
+      color: #fff;
+      font-family: "Black Ops One", Arial, sans-serif;
+    }
+    .char-list-wrapper {
+      max-width: 1100px;
+      margin: 40px auto;
+      background: rgba(0,0,0,0.7);
+      border-radius: 18px;
+      padding: 32px 24px;
+      box-shadow: 0 0 24px #000a;
+    }
+    .char-list-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 32px;
+      color: #ff5e1f;
+      letter-spacing: 2px;
+    }
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+    }
+    .char-card {
+      background: #222;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px #0007;
+      padding: 18px 18px 12px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s;
+    }
+    .char-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 32px #ff5e1f44;
+    }
+    .char-img {
+      width: 120px;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 3px solid #ff5e1f;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+    .char-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ffb347;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    .char-party {
+      font-size: 1rem;
+      color: #ff5e1f;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .char-attr {
+      font-size: 0.98rem;
+      color: #fff;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .char-desc {
+      font-size: 0.95rem;
+      color: #eee;
+      margin-bottom: 0;
+      text-align: center;
+      min-height: 60px;
+    }
+    .back-link {
+      display: block;
+      margin: 32px auto 0 auto;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #fff;
+      background: #ff5e1f;
+      padding: 10px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      width: fit-content;
+      transition: background 0.2s;
+    }
+    .back-link:hover {
+      background: #d30000;
+    }
+  </style>
+</head>
+<body>
+  <div class="char-list-wrapper">
+    <div class="char-list-title">Daftar Karakter & Partai Anomali Fighters</div>
+    <div class="char-grid" id="charGrid"></div>
+    <a href="game.html" class="back-link">Kembali ke Game</a>
+  </div>
+  <script>
+    // Data karakter dan partai
+    const partaiData = [
+      {
+        name: "Padiptra Mourningroot",
+        character: "Magaweidah, The Crimson Matron",
+        image: "assets/char1.png",
+        desc: "Banteng Merah itu kini tak lagi menyeruduk demi rakyat, tapi siap menggulingkan siapa pun—bahkan keadilan—demi menjaga tahta sang Ratu yang memerintah dari balik layar.",
+        stats: { atk: 80, def: 60, hp: 100, element: "fire" }
+      },
+      {
+        name: "Grindraksa Legion",
+        character: "Pravornox, The Iron Oath",
+        image: "assets/char2.png",
+        desc: "Sang Burung yang ditunggangi Tuannya meski harus 4 kali terjatuh tapi kini berjaya mengantarkan Tuannya sampai ke tahta diatas penderitaan rakyatnya.",
+        stats: { atk: 75, def: 80, hp: 110, element: "earth" }
+      },
+      {
+        name: "Goqhlarnyx Assembly",
+        character: "Hartanox, The Bureaucratic Husk",
+        image: "assets/char3.png",
+        desc: "Kuning yang dulu lambang kemakmuran kini jadi simbol kebisuan. Beringin tak lagi menaungi rakyat, tapi membelit kekuasaan demi menjaga warisan dinasti yang enggan tumbang.",
+        stats: { atk: 65, def: 90, hp: 120, element: "metal" }
+      },
+      {
+        name: "Nas'drem Coils",
+        character: "Surapalux, The Radiant Maw",
+        image: "assets/char4.png",
+        desc: "Dulu yang katanya warna perubahan kini justru tenggelam dalam arus kepentingan. Sekarang tak lagi mendayung harapan rakyat, tapi berlayar untuk ambisi elit yang bersembunyi di balik jargon restorasi.",
+        stats: { atk: 85, def: 70, hp: 95, element: "light" }
+      },
+      {
+        name: "Pekabhan Maw",
+        character: "Mukhaegrim, The Laughing Vulture",
+        image: "assets/char7.png",
+        desc: "Mereka melangkah dengan spirit santri, menjadikan kebaikan sebagai pedoman. Di tengah hiruk politik, mereka berikhtiar menyalakan cahaya akhlak dan memperjuangkan kemaslahatan umat.",
+        stats: { atk: 70, def: 75, hp: 105, element: "wind" }
+      },
+      {
+        name: "Peksithra Creed",
+        character: "Syaikhuloth, The Cloaked Scribe",
+        image: "assets/char6.png",
+        desc: "Kami tak lagi bersujud untuk rakyat, tapi berlutut di altar kekuasaan. Di balik jubah moral dan dakwah, tersembunyi hasrat akan panggung dan posisi—agama dijadikan alat, bukan lagi cahaya.",
+        stats: { atk: 60, def: 85, hp: 100, element: "shadow" }
+      },
+      {
+        name: "Demokravox",
+        character: "Arhymon, The Heir of Hollow Echoes",
+        image: "assets/char5.png",
+        desc: "Biru yang dulu lantang membela rakyat kini memudar jadi bayang-bayang warisan. Partai tak lagi bergerak karena suara, tapi demi menjaga tahta keluarga di tengah panggung politik yang terus berubah.",
+        stats: { atk: 78, def: 72, hp: 98, element: "void" }
+      },
+      {
+        name: "Panarch Hive",
+        character: "Zulhazir, The Smiling Serpent",
+        image: "assets/char9.png",
+        desc: "Bukan lagi penjaga nurani, tapi makelar kekuasaan. Langit birunya pudar, diganti tawar-menawar di balik layar—demi kursi, bukan keadilan.",
+        stats: { atk: 68, def: 65, hp: 102, element: "poison" }
+      },
+      {
+        name: "Perindrak Maw",
+        character: "Tanovark, The Media Maw",
+        image: "assets/char10.png",
+        desc: "Kami kini bukan gelombang perubahan, tapi perahu pesanan kaum elit. Berlayar megah dengan jargon rakyat, tapi haluannya patuh pada satu nakhoda—bukan suara, melainkan selera penguasa.",
+        stats: { atk: 72, def: 68, hp: 100, element: "electric" }
+      },
+      {
+        name: "Hanurath Shard",
+        character: "Osparum, The Relic Roar",
+        image: "assets/char11.png",
+        desc: "Kita kini tak lagi berdiri untuk suara hati nurani rakyat, tapi jadi perisai bisu bagi kepentingan para elite—rela menukar idealisme demi sejumput kekuasaan yang dikendalikan dari balik bayang kekuasaan lama.",
+        stats: { atk: 74, def: 70, hp: 108, element: "stone" }
+      },
+      {
+        name: "Psychonautic Spawns",
+        character: "Caesar, Magical Child",
+        image: "assets/char13.png",
+        desc: "Bunga Mawar Merah itu kini tak lagi mekar untuk harapan dan keberanian, tapi tumbuh di taman kekuasaan, disiram oleh pujian istana. Ia tak segan menusuk dengan durinya siapa pun yang mengganggu narasi para elit—menjadi penjaga gincu kekuasaan, bukan suara rakyat.",
+        stats: { atk: 90, def: 50, hp: 95, element: "chaos" }
+      }
+    ];
+
+    // Render karakter
+    const charGrid = document.getElementById('charGrid');
+    partaiData.forEach(data => {
+      const div = document.createElement('div');
+      div.className = 'char-card';
+      div.innerHTML = `
+        <img class="char-img" src="${data.image}" alt="${data.character}" />
+        <div class="char-name">${data.character}</div>
+        <div class="char-party">${data.name}</div>
+        <div class="char-attr">
+          <b>ATK:</b> ${data.stats.atk} &nbsp; 
+          <b>DEF:</b> ${data.stats.def} &nbsp; 
+          <b>HP:</b> ${data.stats.hp} &nbsp; 
+          <b>Element:</b> ${data.stats.element.toUpperCase()}
+        </div>
+        <div class="char-desc">${data.desc}</div>
+      `;
+      charGrid.appendChild(div);
+    });
+  </script>
+</body>
+</html>

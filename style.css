@@ -3,7 +3,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  
 }
 
 body {
@@ -12,7 +11,6 @@ body {
   justify-content: center;
   align-items: center;
   background-image: url(background.jpg) ;
-  
 }
 
 /* === START PAGE === */
@@ -38,16 +36,6 @@ body {
   border-radius: 20px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
-/*#left{
-  background-color: rgb(223, 67, 235);
-}
-#mid{
-  background-color: rgb(94, 43, 97);
-}
-#right{
-  background-color: rgb(223, 67, 235);
-}*/
-
 .form-section {
   padding: 25px;
 }
@@ -142,6 +130,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
 }
 
 .player-info {
@@ -152,7 +141,6 @@ body {
 }
 
 .scoreboard {
-/* <<<<<<< ii9wm8-codex/fix-bug-in-game.html */
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 30px;
@@ -160,6 +148,32 @@ body {
   background: rgba(0,0,0,0.6);
   padding: 6px 14px;
   border-radius: 8px;
+}
+
+.game-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100vh
+}
+
+.button-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  /* margin-top: 5rem; */
+}
+
+.button-panel .battle-btn {
+  width: 120px;
+  margin-top: 0;
+}
+
+.button-panelchild {
+  margin-top: 5rem;
 }
 
 .health-bar {
@@ -190,11 +204,9 @@ body {
   color: #fff;
   text-align: center;
   margin-top: 4px;
-
   font-size: 18px;
   margin-bottom: 30px;
   color: #ffffff;
-/* >>>>>>> main */
 }
 
 .card-container {
@@ -277,4 +289,59 @@ body {
 
 .battle-btn:hover {
   background-color: darkred;
+}
+
+/* Tambahan untuk style.css agar layout dua panel rapi */
+/* filepath: c:\Users\Vby\Web-Development\Hacktiv8-085\Phase_0\hackathon_p0_g2\style.css */
+/* ...existing code... */
+.game-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  width: 100%;
+}
+
+.left-panel {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-panel {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 500px;
+}
+
+.button-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.button-panel .battle-btn {
+  width: 120px;
+  margin-top: 0;
+}
+
+/* Tambahkan/ubah ini untuk memastikan popup overlay menutupi seluruh layar */
+#battlePopup {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0,0,0,0.7) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 9999 !important;
 }

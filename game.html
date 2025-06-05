@@ -1,62 +1,84 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Game Kartu</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div class="btransp">
-    <h1><br></h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Kartu</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="btransp">
+      <h1><br /></h1>
       <div class="game-wrapper">
-        <!-- Info Pemain -->
         <div id="playerInfo" class="player-info"></div>
         <div id="scoreboard" class="scoreboard"></div>
-
-      <!-- Area Kartu -->
-      <div class="card-container">
-        <div class="card" id="card1">
-          <div class="card-inner">
-            <div class="card-front">
-              <img id="card1Img" src="" alt="Kartu Pemain" />
+        <div class="game-flex">
+          <!-- KIRI: Card -->
+          <div class="left-panel">
+            <div class="card-container">
+              <div class="card" id="card1">
+                <div class="card-inner">
+                  <div class="card-front">
+                    <img id="card1Img" src="" alt="Kartu Pemain" />
+                  </div>
+                  <div class="card-back"></div>
+                </div>
+                <div class="health-bar">
+                  <div id="playerHealth" class="health-fill player"></div>
+                </div>
+                <div id="playerStats" class="stats"></div>
+              </div>
+              <div class="vs-text">VS</div>
+              <div class="card" id="card2">
+                <div class="card-inner">
+                  <div class="card-front">
+                    <img id="card2Img" src="" alt="Kartu Musuh" />
+                  </div>
+                  <div class="card-back"></div>
+                </div>
+                <div class="health-bar">
+                  <div id="enemyHealth" class="health-fill enemy"></div>
+                </div>
+                <div id="enemyStats" class="stats"></div>
+              </div>
             </div>
-            <div class="card-back"></div>
           </div>
-          <div class="health-bar">
-            <div id="playerHealth" class="health-fill player"></div>
-          </div>
-          <div id="playerStats" class="stats"></div>
+          <!-- KANAN: Button -->
+          <!-- <div class="right-panel">
+            
+          </div> -->
         </div>
 
-        <div class="vs-text">VS</div>
-
-        <div class="card" id="card2">
-          <div class="card-inner">
-            <div class="card-front">
-              <img id="card2Img" src="" alt="Kartu Musuh" />
-            </div>
-            <div class="card-back"></div>
+        <div class="button-panel">
+          <div class="button-panelchild">
+            <button class="battle-btn" onclick="startBattle()">Battle</button>
+            <button class="battle-btn" onclick="resetGame()">Reset</button>
+            <a href="index.html"><button class="battle-btn">Quit</button></a>
           </div>
-            <div class="health-bar">
-              <div id="enemyHealth" class="health-fill enemy"></div>
-            </div>
-            <div id="enemyStats" class="stats"></div>
         </div>
       </div>
 
+<<<<<<< HEAD
       <!-- Tombol Battle -->
         <span>
           <button class="battle-btn" onclick="startBattle()">Battle</button>
           <button class="battle-btn" onclick="quitGame()">Quit</button>
         </span>
+=======
+      <!-- <div style="display: flex; justify-content: center; align-items: center;">
+        <a href="character.html"
+          ><button class="battle-btn" type="button">Karakter Anomali</button></a
+        >
+      </div> -->
+>>>>>>> bdb3a71 (second commit)
     </div>
-  </div>
-  
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
